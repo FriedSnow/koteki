@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String name = dialogName.getText().toString();
                 int age = Integer.parseInt(dialogAge.getText().toString());
-                databaseAdapter.insert(new Profile(name, age, R.drawable.ic_launcher_background));
+                databaseAdapter.insert(new Profile(name, age, R.mipmap.ic_maxwell_foreground));
                 Toast.makeText(MainActivity.this, "Данные добавлены!", Toast.LENGTH_SHORT).show();
                 onResume();
                 addDialog.hide();

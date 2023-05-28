@@ -36,7 +36,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
         holder.textViewName.setText(profiles.get(position).name.toString());
         holder.textViewAge.setText(String.valueOf(profiles.get(position).age));
         int res = profiles.get(position).photo;
-        holder.imageViewPhoto.setImageResource(R.drawable.ic_launcher_background);//profiles.get(position).photo);
+        holder.imageViewPhoto.setImageResource(R.mipmap.ic_maxwell_foreground);//profiles.get(position).photo);
     }
 
     @Override
