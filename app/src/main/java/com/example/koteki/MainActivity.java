@@ -1,11 +1,11 @@
 package com.example.koteki;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.database.Cursor;
@@ -17,6 +17,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
 public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
@@ -67,13 +69,20 @@ public class MainActivity extends AppCompatActivity {
                 }
                 case ItemTouchHelper.RIGHT:{
                     editProfile(recyclerView, (long)viewHolder.itemView.getTag());
-                    //-----------------------
                     break;
                 }
             }
         }
         @Override
         public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+
+            new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                    //.addBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.my_background))
+                    .addSwipeLeftActionIcon(R.drawable.baseline_delete_24)
+                    .addSwipeRightActionIcon(R.drawable.baseline_edit_24)
+                    .create()
+                    .decorate();
+
             super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
         }
     };
@@ -97,8 +106,8 @@ public class MainActivity extends AppCompatActivity {
         addDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.argb(100,0,0,0)));
         addDialog.setContentView(R.layout.add_profile_dialog);
 
-        EditText dialogName = addDialog.findViewById(R.id.personName);
-        EditText dialogAge = addDialog.findViewById(R.id.personAge);
+        EditText dialogName = addDialog.findViewById(R.id.catName);
+        EditText dialogAge = addDialog.findViewById(R.id.catAge);
         addDialog.findViewById(R.id.buttonAdd).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -115,10 +124,10 @@ public class MainActivity extends AppCompatActivity {
     public void editProfile(View view, long id) {
         Dialog editDialog = new Dialog(this, R.style.Theme_Koteki);
         editDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.argb(100,0,0,0)));
-        editDialog.setContentView(R.layout.add_profile_dialog);
+        editDialog.setContentView(R.layout.edit_profile_dialog);
 
-        EditText dialogName = editDialog.findViewById(R.id.personName);
-        EditText dialogAge = editDialog.findViewById(R.id.personAge);
+        EditText dialogName = editDialog.findViewById(R.id.catName);
+        EditText dialogAge = editDialog.findViewById(R.id.catAge);
 
         Profile profile = databaseAdapter.getSingleProfile(id);
         dialogName.setText(profile.name);
